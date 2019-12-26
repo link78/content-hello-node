@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 9090
 
-CMD ["node","index.js"]
+CMD ["node","app.js"]
