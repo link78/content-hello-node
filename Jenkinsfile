@@ -8,14 +8,7 @@ pipeline {
   agent any
   
   stages{
-     stage ('Build Nodejs app') {
-     steps {
      
-     sh label: '',script: 'npm install'
-     
-     }
-}
-  
       stage('Buildgin Nodejs App Image Container'){
         when {
         branch 'master'
