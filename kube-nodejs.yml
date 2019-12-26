@@ -1,7 +1,6 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
   labels:
     app: kubenodejs
   name: kubenodejs
@@ -10,31 +9,21 @@ spec:
   selector:
     matchLabels:
       app: kubenodejs
-  strategy: {}
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: kubenodejs
     spec:
       containers:
       - image: DOCKER_IMAGE_NAME:$BUILD_NUMBER
         name: kubenodejs
-        resources: {}
-status: {}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: "2019-12-26T22:06:08Z"
-  labels:
-    app: kubenodejs
   name: kubenodejs
   namespace: default
-  resourceVersion: "3692"
 spec:
-  clusterIP: 10.96.255.17
-  externalTrafficPolicy: Cluster
   ports:
   - nodePort: 31090
     port: 9090
@@ -42,5 +31,4 @@ spec:
     targetPort: 9090
   selector:
     app: kubenodejs
-  sessionAffinity: None
   type: NodePort
