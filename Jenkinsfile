@@ -10,7 +10,7 @@ pipeline {
   stages{
      
       stage('Buildgin Nodejs App Image Container'){
-        when { branch 'master'}
+       // when { branch 'master'}
         steps{
          script{
         dockerImage = docker.build("burk1212/hello-nodejs:${env.BUILD_NUMBER}")
@@ -23,7 +23,7 @@ pipeline {
       }
       
      stage('Push Image to Docker Hub'){
-        when { branch 'master'}
+       // when { branch 'master'}
       steps {
        
         script {
