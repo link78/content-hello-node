@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 9090
 
-CMD ["node","app.js"]
+CMD ["npm","start"]
