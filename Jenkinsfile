@@ -1,8 +1,11 @@
 pipeline {
-  agent any
+  
+  
   environmnent {
-  dockerImage= ''
+  dockerImage= ""
   }
+  
+  agent any
   
   stages{
      stage ('Build Nodejs app') {
