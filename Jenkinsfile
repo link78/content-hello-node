@@ -29,7 +29,7 @@ pipeline {
         script {
         docker.withRegistry('https://registry.hub.docker.com','Burk1212') {
           dockerImage = docker.build("burk1212/hello-nodejs:${env.BUILD_NUMBER}")
-          dockerImage = docker.push("${env.BUILD_NUMBER}")
+
           dockerImage.push("latest")
         }
         }
