@@ -49,8 +49,7 @@ pipeline {
     
     stage('Deploy to Kube'){
       steps {
-        input 'Deploy to Production'
-        milestone(1)
+       
         kubernetesDeploy(
           kubeconfigId: 'kube_id',
           configs: 'kube-nodejs.yml',
