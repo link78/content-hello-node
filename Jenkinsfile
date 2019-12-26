@@ -43,7 +43,7 @@ pipeline {
     }
     stage('Running Nodejs container') {
     steps {
-      sh label: '',script: 'docker run --name nodejs-cicd -d -p 9090:9090 burk1212/hello-nodejs'
+      sh label: '',script: 'docker run --name nodejs-cicd -d -p 9090:9090 burk1212/kubenodejs'
     }
     }
     
