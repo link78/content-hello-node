@@ -1,9 +1,7 @@
 pipeline {
   
   
-  environmnent {
-  dockerImage= ""
-  }
+  
   
   agent any
   
@@ -22,7 +20,7 @@ pipeline {
         }
         steps{
          script{
-         dockerImage = docker.build("burk1212/hello-nodejs:${env.BUILD_NUMBER}")
+        def dockerImage = docker.build("burk1212/hello-nodejs:${env.BUILD_NUMBER}")
          dockerImage.inside {
           sh 'echo $(curl localhost:9090)'
          }
@@ -36,7 +34,7 @@ pipeline {
         when { branch 'master'}
         script {
         docker.withRegistry('https://registry.hub.docker.com','Burk1212') {
-          dockerImage.push("${env.BUILD_NUMBER}")
+        def  dockerImage.push("${env.BUILD_NUMBER}")
           dockerImage.push("latest")
         }
         }
