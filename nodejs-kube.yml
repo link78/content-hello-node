@@ -18,7 +18,7 @@ spec:
         app: kubenodejs
     spec:
       containers:
-      - image: DOCKER_IMAGE_NAME
+      - image: DOCKER_IMAGE_NAME:$BUILD_NUMBER
         name: kubenodejs
         resources: {}
 status: {}
