@@ -37,7 +37,7 @@ pipeline {
      }
     stage('Remove old Container'){
       steps {
-      sh label:'',script: 'docker rm -rf nodejs-cicd'
+      sh label:'',script: 'docker rm -f nodejs-cicd'
       }
     }
     stage('Running Nodejs container') {
