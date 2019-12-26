@@ -2,6 +2,7 @@ pipeline {
   
   environment {
    dockerImage = "" 
+    DOCKER_IMAGE_NAME= "burk1212/kubenodejs"
   }
   
   
@@ -13,7 +14,7 @@ pipeline {
        // when { branch 'master'}
         steps{
          script{
-        dockerImage = docker.build("burk1212/hello-nodejs:${env.BUILD_NUMBER}")
+        dockerImage = docker.build(DOCKER_IMAGE_NAME)
          dockerImage.inside {
           sh 'echo $(curl localhost:9090)'
          }
@@ -28,8 +29,8 @@ pipeline {
        
         script {
         docker.withRegistry('https://registry.hub.docker.com','Burk1212') {
-          dockerImage = docker.build("burk1212/hello-nodejs:${env.BUILD_NUMBER}")
-
+          dockerImage = docker.build(DOCKER_IMAGE_NAME)
+          dockerImage.push("${env.BUILD_NUMBER}")
           dockerImage.push("latest")
         }
         }
@@ -46,5 +47,28 @@ pipeline {
     }
     }
     
+    stage('Deploy to Kube'){
+      steps {
+        input 'Deploy to Production'
+        milestone(1)
+      }
+    }
+    
   } //end of stages
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
