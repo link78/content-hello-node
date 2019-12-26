@@ -28,15 +28,16 @@ pipeline {
        
         script {
         docker.withRegistry('https://registry.hub.docker.com','Burk1212') {
-        dockerImage = docker.push("${env.BUILD_NUMBER}")
+          dockerImage = docker.build("burk1212/hello-nodejs:${env.BUILD_NUMBER}")
+          dockerImage = docker.push("${env.BUILD_NUMBER}")
           dockerImage.push("latest")
         }
         }
       }
      }
-    stage('Deploying') {
+    stage('Running Nodejs container') {
     steps {
-      sh label: '',script: 'echo "deploying app"'
+      sh label: '',script: 'docker run --name nodejs-cicd -d -p 9090:9090 burk1212/hello-nodejs'
     }
     }
     
