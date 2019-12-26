@@ -15,7 +15,7 @@ spec:
         app: kubenodejs
     spec:
       containers:
-      - image: burk1212/kubenodejs
+      - image: $DOCKER_IMAGE_NAME
         name: kubenodejs
 ---
 apiVersion: v1
