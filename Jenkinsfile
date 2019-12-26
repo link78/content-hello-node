@@ -28,7 +28,7 @@ pipeline {
         }
       }
       
-     stage(Push Image to Docker Hub){
+     stage('Push Image to Docker Hub'){
       steps {
         when { branch 'master'}
         script {
