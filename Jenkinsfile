@@ -22,45 +22,7 @@ pipeline {
      
      
       
-     stage('Push Image to Docker Hub'){
-       // when { branch 'master'}
-      steps {
-       
-        container('nodejs') {
-        docker.withRegistry('https://registry.hub.docker.com','DOCKER_ID') {
-          dockerImage = docker.build(DOCKER_IMAGE_NAME)
-          dockerImage.push("${env.BUILD_NUMBER}")
-          dockerImage.push("latest")
-        }
-        }
-      }
-     }
-   // stage('Remove old Container'){
-    //  steps {
-    //  sh label:'',script: 'docker rm -f nodejs-cicd'
-    //  }
-  //  }
-    stage('Running Nodejs container') {
-    steps {
-      container('nodejs'){
-      sh label: '',script: 'docker run --name nodejs-cicd -d -p 9090:9090 burk1212/kubenodejs'
-    }
-    }
-    }
-    
-    stage('Deploy to Kube'){
-      steps {
-       
-        kubernetesDeploy(
-          kubeconfigId: 'kube_id',
-          configs: 'kube-nodejs.yml',
-          enableConfigSubstitution: true
-        
-        )
-        
-        
-      }
-    }
+     
     
   } //end of stages
 }
