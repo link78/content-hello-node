@@ -25,10 +25,12 @@ pipeline {
       steps {
        
         container('nodejs') {
+	script {
         docker.withRegistry('https://registry.hub.docker.com','DOCKER_ID') {
          def dockerImage = docker.build(DOCKER_IMAGE_NAME)
           dockerImage.push("${env.BUILD_NUMBER}")
           dockerImage.push("latest")
+	}
         }
         }
       }
