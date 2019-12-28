@@ -53,19 +53,19 @@ pipeline {
 	  
 	  }
 	  
-	  stage('Deploy to Kube'){
-             steps {
+	//  stage('Deploy to Kube'){
+         //    steps {
        
-        kubernetesDeploy(
-          kubeconfigId: 'kube_id',
-          configs: 'kube-nodejs.yml',
-          enableConfigSubstitution: true
+     //   kubernetesDeploy(
+        //  kubeconfigId: 'kube_id',
+        //  configs: 'kube-nodejs.yml',
+        //  enableConfigSubstitution: true
         
-        )
+      //  )
         
         
-      }
-    }
+     // }
+  //  }
     
   } //end of stages
 }
