@@ -35,7 +35,15 @@ pipeline {
         }
       }
      }  
-      
+      stage('Remove old Image') {
+            steps {
+                container('nodejs') {
+	             sh label:'',script: 'docker rm -f --name k8s '
+	    }
+	  }
+	  
+	  }
+	  
 	  stage('Run Image on docker') {
             steps {
                 container('nodejs') {
