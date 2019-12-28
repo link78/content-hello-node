@@ -38,7 +38,7 @@ pipeline {
       stage('Remove old Image') {
             steps {
                 container('nodejs') {
-	             sh label:'',script: 'docker rm -f k8s '
+	           //  sh label:'',script: 'docker rm -f k8s '
 	    }
 	  }
 	  
