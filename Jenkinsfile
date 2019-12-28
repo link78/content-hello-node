@@ -14,8 +14,8 @@ pipeline {
     	steps {
        	container('nodejs'){
 	      sh 'node --version'
-        sh ' apk update && apt add docker'
-        sh 'docker --version
+             sh 'apk update && apt add docker'
+             sh 'docker --version'
 	}
 	}
 }
