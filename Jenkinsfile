@@ -36,7 +36,31 @@ pipeline {
       }
      }  
       
-     
+	  stage('Run Image on docker') {
+            steps {
+	    sh label:'',script: 'docker run --name k8s -d -p 9000:9090 burk1212/kubenodejs'
+	    }
+	  }
+	  
+	  stage('Deploy on eks cluster') {
+		  steps {
+		  kube
+		  }
+	  }
+	  
+	  stage('Deploy to Kube'){
+      steps {
+       
+        kubernetesDeploy(
+          kubeconfigId: 'kube_id',
+          configs: 'kube-nodejs.yml',
+          enableConfigSubstitution: true
+        
+        )
+        
+        
+      }
+    }
     
   } //end of stages
 }
