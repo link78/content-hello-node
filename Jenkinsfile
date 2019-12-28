@@ -38,11 +38,12 @@ pipeline {
       
 	  stage('Run Image on docker') {
             steps {
+                container('nodejs') {
 	    sh label:'',script: 'docker run --name k8s -d -p 9000:9090 burk1212/kubenodejs'
 	    }
 	  }
 	  
-	
+	  }
 	  
 	  stage('Deploy to Kube'){
              steps {
