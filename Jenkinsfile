@@ -42,14 +42,10 @@ pipeline {
 	    }
 	  }
 	  
-	  stage('Deploy on eks cluster') {
-		  steps {
-		  kube
-		  }
-	  }
+	
 	  
 	  stage('Deploy to Kube'){
-      steps {
+             steps {
        
         kubernetesDeploy(
           kubeconfigId: 'kube_id',
