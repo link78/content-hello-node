@@ -20,18 +20,7 @@ pipeline {
 	}
 }
      
-      stage('Buildgin Nodejs App Image Container'){
-       // when { branch 'master'}
-        steps{
-         container('nodejs'){
-        dockerImage = docker.build(DOCKER_IMAGE_NAME)
-         dockerImage.inside {
-          sh 'echo $(curl localhost:9090)'
-         }
-         
-        } // end of script
-        }
-      }
+     
       
      stage('Push Image to Docker Hub'){
        // when { branch 'master'}
