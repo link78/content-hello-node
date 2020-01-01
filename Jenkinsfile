@@ -23,16 +23,13 @@ volumes: [
     }
     stage('Build Docker Image') {
       container('docker') {
-        script {
-         
-        docker.withRegistry('https://registry.hub.docker.com','DOCKER_ID') {
-        def dockerImage = docker.build(DOCKER_IMAGE_NAME)
-        dockerImage.push("${env.BUILD_NUMBER}")
-        dockerImage.push("latest")
-	}
+        sh 'docker --version'
+	sh 'docker build -t $DOCKER_HUB_USR/kube-nodejs .'
+	sh 'docker login -u $DOCKER_HUB_USR -p $DOCKER_HUB_PASSWD'
+	sh 'docker push $DOCKER_HUB_USR/kube-nodejs'
         
       }
     }
  }
 
-});
+})
