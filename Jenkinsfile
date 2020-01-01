@@ -11,9 +11,13 @@ volumes: [
    DOCKER_IMAGE_NAME = "burk1212/kube-nodejs"
    }
    
-    stage('checkout') {
+    stage('checkout and Installing docker') {
+	 git 'https://github.com/link78/hello-nodejs.git'
       container('nodejs') {
-        scm
+	 sh 'node --version'
+         sh 'apk update && apk add docker'
+         sh 'docker --version'
+        
       }
     }
     stage ('Build App') {
@@ -22,7 +26,7 @@ volumes: [
       }
     }
     stage('Build Docker Image') {
-      container('docker') {
+      container('nodejs') {
         sh 'docker --version'
 	sh 'docker build -t $DOCKER_HUB_USR/kube-nodejs .'
 	sh 'docker login -u $DOCKER_HUB_USR -p $DOCKER_HUB_PASSWD'
