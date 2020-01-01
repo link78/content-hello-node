@@ -24,7 +24,7 @@ volumes: [
     stage('Build Docker Image') {
       container('docker') {
         script {
-          sh 'docker -version'
+         
         docker.withRegistry('https://registry.hub.docker.com','DOCKER_ID') {
         def dockerImage = docker.build(DOCKER_IMAGE_NAME)
         dockerImage.push("${env.BUILD_NUMBER}")
@@ -35,4 +35,4 @@ volumes: [
     }
  }
 
-})
+});
