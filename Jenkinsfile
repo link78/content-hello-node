@@ -1,5 +1,5 @@
 podTemplate(name: 'devops',label: 'devops', containers: [
-  containerTemplate(name: 'docker', image: 'trion/jenkins-docker-client',ttyEnabled: true, command: 'cat'),
+  containerTemplate(name: 'docker', image: 'joao29a/jnlp-slave-alpine-docker',ttyEnabled: true, command: 'cat'),
   containerTemplate(name: 'nodejs', image: 'node:alpine', ttyEnabled: true, command: 'cat')
 ],
 volumes: [
