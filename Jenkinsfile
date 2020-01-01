@@ -6,6 +6,11 @@ volumes: [
   hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')],
  {
  node ('devops') {
+   environment {
+   
+   DOCKER_IMAGE_NAME = "burk1212/kube-nodejs"
+   }
+   
     stage('checkout') {
       container('nodejs') {
         scm
@@ -18,9 +23,14 @@ volumes: [
     }
     stage('Build Docker Image') {
       container('docker') {
-        sh 'docker build -t $DOCKER_HUB_USR/kube-nodejs .'
-        sh 'docker login -u $DOCKER_HUB_USR -p $DOCKER_HUB_PASSWD'
-        sh 'docker push $DOCKER_HUB_USR/kube-nodejs'
+        script {
+          sh 'docker -version'
+        docker.withRegistry('https://registry.hub.docker.com','DOCKER_ID') {
+        def dockerImage = docker.build(DOCKER_IMAGE_NAME)
+        dockerImage.push("${env.BUILD_NUMBER}")
+        dockerImage.push("latest")
+	}
+        
       }
     }
  }
