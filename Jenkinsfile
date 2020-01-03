@@ -25,16 +25,45 @@ volumes: [
       sh 'npm install'
       }
     }
+	 
+	 
+	 
     stage('Build Docker Image') {
       container('nodejs') {
         sh 'docker --version'
 	sh 'docker build -t $DOCKER_HUB_USR/kube-nodejs .'
 	sh 'docker login -u $DOCKER_HUB_USR -p $DOCKER_HUB_PASSWD'
 	sh 'docker push $DOCKER_HUB_USR/kube-nodejs'
-	sh 'docker run --name test-kube -d -p 9090:9090 $DOCKER_HUB_USR/kube-nodejs'
+	sh 'docker run --name test-d -p 9091:9090 $DOCKER_HUB_USR/kube-nodejs'
+	sh 'docker ps' 
         
       }
     }
+  stage('Deploy to Kube'){
+    steps {   
+     kubernetesDeploy(
+         kubeconfigId: 'kube_id',
+         configs: 'kube-nodejs.yml',
+         enableConfigSubstitution: true
+        
+       )
+        
+        
+      }
+   }
+	 
  }
 
 })
+
+
+
+
+
+
+
+
+
+
+
+
