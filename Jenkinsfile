@@ -42,7 +42,7 @@ volumes: [
   stage('Deploy to Kube'){
     steps {   
      kubernetesDeploy(
-         kubeconfigId: 'kube_id',
+         kubeconfigId: 'kubeConfig_id',
          configs: 'kube-nodejs.yml',
          enableConfigSubstitution: true
         
