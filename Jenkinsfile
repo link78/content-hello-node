@@ -38,7 +38,7 @@ volumes: [
       }
     }
   stage('Deploy to Kube'){
-    steps {   
+    
      kubernetesDeploy(
          kubeconfigId: 'kubeConfig_id',
          configs: 'kube-nodejs.yml',
@@ -47,7 +47,7 @@ volumes: [
        )
         
         
-      }
+      
    }
 	 
  }
