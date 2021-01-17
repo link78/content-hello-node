@@ -1,40 +1,53 @@
 pipeline {
+    agent any
 
-  environment {
-    dockerImage = ""
-    DOCKER_IMAGE_NAME= "burk1212/k8sdemo"
-  }
-
-  agent any
-
-  stages {
-
-    stage('Checkout Source') {
-      steps {
-        git 'https://github.com/link78/jx-nodejs.git'
-      }
-    }
-
-
-    stage('Build and Push Image') {
-      steps{
-        script {
-          docker.withRegistry( "https://registry.hub.docker.com","DOCKERID" ) {
-            dockerImage = docker.build(DOCKER_IMAGE_NAME)
-            dockerImage.push("${env.BUILD_NUMBER}")                         
-            dockerImage.push("latest")
-          }
+    stages {
+        stage('Check out code') {
+            steps {
+                 checkout scm
+            }
         }
-      }
-    }
-  
-    stage('Deploy App') {
-      steps { 
+        stage('Build Docker image') {
+            steps {
+                 sh 'docker login -u $DOCKER_ID -p $Password'
+                 sh 'docker build -t $DOCKER_ID/jx_testnodejs .'
+            }
+        }
         
-       sh label: '',script: 'docker run --name jx -d -p 8095:8000 burk1212/k8sdemo'
-        
-      }
+        stage('Push container') {
+            steps {
+                sh "docker push $DOCKER_ID/jx_testnodejs" 
+            }
+        }
+    //    stage('Remove old container') {
+    //        steps {
+      //          sh 'docker rm -f ng-dev'
+	 //       sh 'docker rm -f ng-qa'
+	//	sh 'docker rm -f ng'
+  //          }
+  //      }
+        stage('Deploy to dev') {
+            steps {
+               sh 'docker run --name ng-dev -d -p 8021:9090 $DOCKER_ID/jx_testnodejs'
+            }
+        }
+        stage('Deploy to qa') {
+            steps {
+               sh 'docker run --name ng-qa -d -p 8022:9090 $DOCKER_ID/jx_testnodejs'
+            }
+        }
+        stage('Approve to prod') {
+            steps {
+              timeout(time:1, unit:'DAYS') {
+		         input('Do you want to deploy to live?')
+	     }
+            }
+        }
+        stage('Deploy container to production') {
+            steps {
+                sh 'docker run --name ng -d -p 8020:9090 $DOCKER_ID/jx_testnodejs'
+                sh 'docker ps'
+            }
+        }
     }
-  
- }
 }
